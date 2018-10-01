@@ -1,9 +1,10 @@
-const model = require('../models');
+const {db_read, db_write} = require('../models');
 debugger
 async function test(){
   debugger
-console.log(model);
-  const resp = await model.User.all();
+  const resp1 = await db_write.User.create({name: 'kuldeep'});
+  const resp = await db_write.User.all();
+  
 console.log(resp)
 
 }

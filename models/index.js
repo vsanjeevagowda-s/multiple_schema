@@ -5,8 +5,9 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/..\config\config.json')[env];
-const db = {};
+const config = require(__dirname + '/../config/config.json')[env];
+const db_read = {};
+const db_write = {};
 
 let sequelize_read;
 let sequelize_rw;
@@ -19,21 +20,30 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    debugger
-    const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
+    const model_read = sequelize_read['import'](path.join(__dirname, file));
+    const model_rw = sequelize_rw['import'](path.join(__dirname, file));
+    db_read[model_read.name] = model_read;
+    db_write[model_rw.name] = model_rw;
   });
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+Object.keys(db_read).forEach(modelName => {
+  if (db_read[modelName].associate) {
+    db_read[modelName].associate(db_read);
   }
 });
 
-db.sequelize_read = sequelize_read;
-db.sequelize_rw = sequelize_rw;
-db.Sequelize = Sequelize;
+Object.keys(db_write).forEach(modelName => {
+  if (db_write[modelName].associate) {
+    db_write[modelName].associate(db_write);
+  }
+});
 
-module.exports = db;
+
+db_read.sequelize_read = sequelize_read;
+db_write.sequelize_rw = sequelize_rw;
+db_read.Sequelize = Sequelize;
+db_write.Sequelize = Sequelize;
+
+module.exports = {db_read, db_write};
 debugger
 
