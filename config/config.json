@@ -1,0 +1,32 @@
+{
+  "development": {
+    "read_only": {
+      "username": "root",
+      "password": "password",
+      "database": "database_development_read",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "read_write": {
+      "username": "root",
+      "password": "password",
+      "database": "database_development_rw",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
